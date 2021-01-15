@@ -57,7 +57,7 @@
 
         let totalExpense = 0;
 
-        headingEl.textContent = totalExpense;
+        updateHeaderTotal(totalExpense);
 
         var allExpenses = [];
 
@@ -85,16 +85,22 @@
                 inputDescEl.value = "";
                 allExpenses.push(expenseItem);
             }
-            const someText = `Total: ${totalExpense}`;
-            headingEl.textContent = someText;
-
+            updateHeaderTotal(totalExpense);
             renderList(allExpenses);
 
+        }
+        function updateHeaderTotal(total) {
+            const someText = `Total: ${total}`;
+            headingEl.textContent = someText;
         }
         function deleteListItem(dateValue) {
             const newArr = allExpenses
                 .filter(expense => expense.moment.valueOf() !== dateValue);
             allExpenses = newArr;
+            let newTotalExpense = 0;
+            allExpenses.forEach(expense=>newTotalExpense += expense.amount)
+            totalExpense = newTotalExpense;
+            updateHeaderTotal(totalExpense);
             renderList(newArr);
         }
         /// View layer goes down here.. 
